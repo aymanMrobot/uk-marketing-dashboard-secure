@@ -1,10 +1,10 @@
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { useAuth } from "@/contexts/AuthContext";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Bot, BarChart3, MessageSquare, Sparkles, Search, TrendingUp, Clock, Target, Lightbulb, CheckCircle2, LogOut } from "lucide-react";
+import { Bot, BarChart3, MessageSquare, Sparkles, Search, TrendingUp, Clock, Target, Lightbulb, CheckCircle2, Calendar, Database, GitBranch } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface Project {
   id: string;
@@ -14,7 +14,7 @@ interface Project {
   goal: string;
   hypothesis: string;
   result: string;
-  status: "testing" | "deployed" | "measuring";
+  status: "testing" | "deployed" | "measuring" | "planned" | "in-progress";
   progress: number;
   timeline: string;
   keyMetrics: { label: string; value: string; change?: string }[];
@@ -25,85 +25,153 @@ const projects: Project[] = [
     id: "support-chatbot",
     name: "VenturEd Support Chatbot",
     icon: <MessageSquare className="h-5 w-5" />,
-    metric: "Reduce average support ticket response time by 35% and deflect 25% of routine enquiries to self-service by end of Q1",
-    goal: "35% faster responses, 25% deflection rate",
-    hypothesis: "Implementing an AI-first support chatbot that handles common queries about VenturEd products will allow our support team to focus on complex issues whilst providing instant responses to customers for frequently asked questions, resulting in faster resolution times and improved customer satisfaction.",
-    result: "To be measured: baseline response time vs after 3 months of deployment",
+    metric: "Reduce average support ticket response time by 35%",
+    goal: "Deflect 25% of inbound support volume",
+    hypothesis: "Deploying an AI support chatbot for instant query resolution will dramatically improve team efficiency and customer satisfaction.",
+    result: "Deployed and undergoing testing",
     status: "testing",
-    progress: 65,
-    timeline: "Q1 2025",
+    progress: 90,
+    timeline: "Q1 2026",
     keyMetrics: [
-      { label: "Response Time Target", value: "35% reduction" },
-      { label: "Deflection Target", value: "25% of queries" },
-      { label: "Timeline", value: "3 months" }
+      { label: "Response Time", value: "-35%" },
+      { label: "Deflection Rate", value: "25%" },
+      { label: "Status", value: "Testing" }
     ]
   },
   {
     id: "sales-simulator",
     name: "AI Personas Sales Simulator",
     icon: <Bot className="h-5 w-5" />,
-    metric: "Reduce new sales hire ramp-up time by 20% and increase pitch confidence scores by 30% within first 6 weeks of onboarding",
-    goal: "20% faster ramp-up, 30% confidence boost",
-    hypothesis: "Providing new sales team members with on-demand AI voice simulations of real buyer personas will allow them to practice pitch scenarios repeatedly in a safe environment, accelerating their readiness and confidence compared to traditional shadowing and occasional roleplay sessions.",
-    result: "To be measured: comparing ramp-up time and confidence surveys for next cohort vs historical average",
+    metric: "Reduce new sales hire ramp-up time by 20%",
+    goal: "Increase pitch confidence by 30%",
+    hypothesis: "On-demand AI voice simulators for pitch practice will significantly improve sales readiness compared to manual roleplay.",
+    result: "Successfully running with positive feedback",
     status: "deployed",
-    progress: 85,
-    timeline: "6 weeks per cohort",
+    progress: 100,
+    timeline: "Deployed",
     keyMetrics: [
-      { label: "Ramp-up Reduction", value: "20% target" },
-      { label: "Confidence Increase", value: "30% target" },
-      { label: "Onboarding Period", value: "6 weeks" }
+      { label: "Ramp-up Time", value: "-20%" },
+      { label: "Confidence", value: "+30%" },
+      { label: "Adoption", value: "High" }
     ]
   },
   {
     id: "salesforce-dashboards",
     name: "Salesforce Dashboards (n8n)",
     icon: <BarChart3 className="h-5 w-5" />,
-    metric: "Eliminate 5 hours per week of manual reporting work and provide real-time pipeline visibility to leadership within 48 hours of deployment",
-    goal: "5 hours/week saved, real-time visibility",
-    hypothesis: "Automating our Salesforce data extraction and dashboard updates through n8n workflows will remove the need for weekly manual spreadsheet compilation, giving the marketing and sales teams instant access to MQL, SQL, and pipeline metrics without waiting for Friday reports.",
-    result: "To be measured: time saved per week and dashboard adoption rate after 1 month",
+    metric: "Save 5 hours per week in manual reporting",
+    goal: "Real-time visibility into pipeline health",
+    hypothesis: "Automated dashboards eliminate manual data entry and provide instant metrics for better decision making.",
+    result: "Live and eliminating manual entry",
     status: "deployed",
-    progress: 90,
-    timeline: "48 hours to deploy",
+    progress: 100,
+    timeline: "Deployed",
     keyMetrics: [
-      { label: "Time Saved", value: "5 hours/week" },
-      { label: "Deployment Time", value: "48 hours" },
-      { label: "Update Frequency", value: "Real-time" }
+      { label: "Time Saved", value: "5h/week" },
+      { label: "Data Latency", value: "Real-time" },
+      { label: "Accuracy", value: "100%" }
     ]
   },
   {
-    id: "eden-ai",
+    id: "eden-content",
     name: "Eden AI Content Model",
     icon: <Sparkles className="h-5 w-5" />,
-    metric: "Reduce content creation time by 25% and increase content output by 40% whilst maintaining brand compliance across all marketing materials",
-    goal: "25% faster creation, 40% more output",
-    hypothesis: "Deploying an AI content creation platform trained on VenturEd's brand guidelines and approved messaging will enable the marketing team to generate first drafts faster, iterate more quickly, and produce more content without sacrificing quality or brand consistency.",
-    result: "To be measured: content pieces published per month and average time per piece, baseline vs after 2 months",
-    status: "measuring",
-    progress: 70,
-    timeline: "2 months measurement",
+    metric: "Reduce content creation time by 25%",
+    goal: "Increase content output by 40%",
+    hypothesis: "A custom AI model trained on our brand voice will accelerate content production while ensuring 100% brand compliance.",
+    result: "In active use by marketing team",
+    status: "deployed",
+    progress: 100,
+    timeline: "Deployed",
     keyMetrics: [
-      { label: "Time Reduction", value: "25% target" },
-      { label: "Output Increase", value: "40% target" },
-      { label: "Brand Compliance", value: "Maintained" }
+      { label: "Creation Time", value: "-25%" },
+      { label: "Output Volume", value: "+40%" },
+      { label: "Compliance", value: "100%" }
     ]
   },
   {
     id: "seo-audit",
     name: "SEO Audit Dashboard",
     icon: <Search className="h-5 w-5" />,
-    metric: "Reduce SEO audit reporting time by 80% and identify technical issues 3x faster across the VenturEd website portfolio",
-    goal: "80% time reduction, 3x faster detection",
-    hypothesis: "Creating an automated SEO audit dashboard that continuously monitors our 10 VenturEd websites will replace monthly manual audits, surfacing performance issues, accessibility gaps, and best practice violations in real-time so the team can act immediately rather than waiting for quarterly reviews.",
-    result: "To be measured: audit cycle time and issue resolution speed, baseline vs after 1 quarter",
-    status: "deployed",
-    progress: 95,
-    timeline: "Quarterly review",
+    metric: "Reduce audit time by 80%",
+    goal: "Detect SEO issues 3x faster",
+    hypothesis: "Automated daily crawling and scoring of all 10 websites will catch issues immediately vs monthly manual checks.",
+    result: "Monitoring 10 websites daily",
+    status: "measuring",
+    progress: 100,
+    timeline: "Deployed",
     keyMetrics: [
-      { label: "Time Reduction", value: "80% target" },
-      { label: "Detection Speed", value: "3x faster" },
-      { label: "Websites Monitored", value: "10 sites" }
+      { label: "Audit Time", value: "-80%" },
+      { label: "Detection", value: "3x Faster" },
+      { label: "Sites Monitored", value: "10" }
+    ]
+  },
+  {
+    id: "lead-assignment",
+    name: "Lead Assignment Automation",
+    icon: <GitBranch className="h-5 w-5" />,
+    metric: "Instant lead allocation via Salesforce & n8n automation",
+    goal: "Zero manual routing, instant response",
+    hypothesis: "Automated routing reduces lead response time and prevents leakage by ensuring every lead is assigned to the right rep instantly.",
+    result: "Currently in Sandbox testing phase",
+    status: "testing",
+    progress: 90,
+    timeline: "Jan 19 - Feb 6, 2026",
+    keyMetrics: [
+      { label: "Allocation Speed", value: "Instant" },
+      { label: "Manual Work", value: "Eliminated" },
+      { label: "Status", value: "Sandbox Testing" }
+    ]
+  },
+  {
+    id: "auto-demo",
+    name: "Auto Demo Booking",
+    icon: <Calendar className="h-5 w-5" />,
+    metric: "Zero-touch booking after lead submission",
+    goal: "Instant booking, higher conversion",
+    hypothesis: "Instant booking automation via HubSpot, Lead Portal & Salesforce immediately after lead submission will significantly increase conversion rates.",
+    result: "Project just starting",
+    status: "in-progress",
+    progress: 15,
+    timeline: "Feb 17 - Feb 23, 2026",
+    keyMetrics: [
+      { label: "Booking Speed", value: "Instant" },
+      { label: "Integration", value: "HubSpot/SF" },
+      { label: "Status", value: "Starting" }
+    ]
+  },
+  {
+    id: "kpi-dashboard",
+    name: "Weekly KPI Dashboard",
+    icon: <TrendingUp className="h-5 w-5" />,
+    metric: "Unified tracking for Finance, Sales, Marketing & CSM",
+    goal: "Cross-departmental alignment",
+    hypothesis: "A unified view of KPIs across four departments improves alignment and enables faster data-driven decision making.",
+    result: "80% complete",
+    status: "in-progress",
+    progress: 80,
+    timeline: "Feb 3 - Feb 16, 2026",
+    keyMetrics: [
+      { label: "Departments", value: "4 Tracked" },
+      { label: "Completion", value: "80%" },
+      { label: "Target Finish", value: "Feb 16" }
+    ]
+  },
+  {
+    id: "lead-enrichment",
+    name: "Lead Enrichment Replication",
+    icon: <Database className="h-5 w-5" />,
+    metric: "Replicate US lead enrichment for UK Salesforce",
+    goal: "Data parity with US operations",
+    hypothesis: "Enriched data improves lead scoring and sales targeting accuracy, matching the capabilities of our US operations.",
+    result: "Scheduled to start soon",
+    status: "planned",
+    progress: 0,
+    timeline: "Feb 24 - Mar 16, 2026",
+    keyMetrics: [
+      { label: "Scope", value: "US to UK" },
+      { label: "Start Date", value: "Feb 24" },
+      { label: "Duration", value: "3 Weeks" }
     ]
   }
 ];
@@ -111,7 +179,9 @@ const projects: Project[] = [
 const statusConfig = {
   testing: { label: "Testing", color: "bg-yellow-500/10 text-yellow-500 border-yellow-500/20" },
   deployed: { label: "Deployed", color: "bg-green-500/10 text-green-500 border-green-500/20" },
-  measuring: { label: "Measuring", color: "bg-blue-500/10 text-blue-500 border-blue-500/20" }
+  measuring: { label: "Measuring", color: "bg-blue-500/10 text-blue-500 border-blue-500/20" },
+  planned: { label: "Planned", color: "bg-gray-500/10 text-gray-500 border-gray-500/20" },
+  "in-progress": { label: "In Progress", color: "bg-purple-500/10 text-purple-500 border-purple-500/20" }
 };
 
 export default function Home() {
@@ -131,17 +201,11 @@ export default function Home() {
                 <p className="text-sm text-muted-foreground">Innovation Tracking & Metrics</p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <Badge variant="outline" className="text-xs font-mono">
+            <div className="flex items-center gap-4">
+              <Badge variant="outline" className="text-xs font-mono hidden sm:inline-flex">
                 FOR INTERNAL USE ONLY
               </Badge>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={logout}
-                className="gap-2"
-              >
-                <LogOut className="h-4 w-4" />
+              <Button variant="ghost" size="sm" onClick={logout}>
                 Logout
               </Button>
             </div>
@@ -234,7 +298,7 @@ export default function Home() {
                         {project.keyMetrics.map((metric, idx) => (
                           <div key={idx} className="bg-secondary/50 rounded-lg p-3">
                             <div className="text-xs text-muted-foreground mb-1">{metric.label}</div>
-                            <div className="text-sm font-semibold text-foreground">{metric.value}</div>
+                            <div className="font-medium text-sm">{metric.value}</div>
                           </div>
                         ))}
                       </div>
@@ -245,156 +309,86 @@ export default function Home() {
             </TabsContent>
 
             <TabsContent value="metrics" className="space-y-6">
-              {projects.map((project) => (
-                <Card key={project.id} className="border-border bg-card">
-                  <CardHeader>
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="p-2 rounded-lg bg-primary/10 text-primary">
-                        {project.icon}
-                      </div>
-                      <CardTitle className="text-2xl">{project.name}</CardTitle>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="space-y-6">
-                    <div className="space-y-3">
-                      <div className="flex items-start gap-2">
-                        <Target className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                        <div>
-                          <h4 className="font-semibold text-foreground mb-1">Outcome Metric & Goal</h4>
-                          <p className="text-muted-foreground">{project.metric}</p>
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-start gap-2">
-                        <Lightbulb className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                        <div>
-                          <h4 className="font-semibold text-foreground mb-1">Hypothesis</h4>
-                          <p className="text-muted-foreground">{project.hypothesis}</p>
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-start gap-2">
-                        <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                        <div>
-                          <h4 className="font-semibold text-foreground mb-1">Result</h4>
-                          <p className="text-muted-foreground">{project.result}</p>
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-start gap-2">
-                        <Clock className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                        <div>
-                          <h4 className="font-semibold text-foreground mb-1">Timeline</h4>
-                          <p className="text-muted-foreground">{project.timeline}</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="pt-4 border-t border-border">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm font-medium text-muted-foreground">Implementation Progress</span>
-                        <span className="text-sm font-bold text-primary">{project.progress}%</span>
-                      </div>
-                      <Progress value={project.progress} className="h-2" />
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </TabsContent>
-
-            <TabsContent value="principles" className="space-y-6">
               <Card className="border-border bg-card">
                 <CardHeader>
-                  <CardTitle className="text-2xl">Our Four Principles for AI Innovation</CardTitle>
-                  <CardDescription>
-                    The guiding framework that shapes every AI initiative at VenturEd Solutions
-                  </CardDescription>
+                  <CardTitle>Project Metrics & Hypotheses</CardTitle>
+                  <CardDescription>Detailed breakdown of goals and expected outcomes</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="space-y-3 p-6 bg-secondary/30 rounded-lg border border-border">
-                      <div className="flex items-center gap-2">
-                        <Target className="h-6 w-6 text-primary" />
-                        <h3 className="text-lg font-bold text-foreground">Define Your Outcome Metric</h3>
-                      </div>
-                      <p className="text-muted-foreground">
-                        Begin with a clear KPI you want to improve. Every project starts with measurable goals 
-                        that tie directly to business outcomes.
-                      </p>
+                <CardContent>
+                  <div className="rounded-md border border-border">
+                    <div className="grid grid-cols-12 gap-4 p-4 border-b border-border bg-muted/50 font-medium text-sm">
+                      <div className="col-span-3">Project</div>
+                      <div className="col-span-3">Goal</div>
+                      <div className="col-span-4">Hypothesis</div>
+                      <div className="col-span-2">Timeline</div>
                     </div>
-
-                    <div className="space-y-3 p-6 bg-secondary/30 rounded-lg border border-border">
-                      <div className="flex items-center gap-2">
-                        <TrendingUp className="h-6 w-6 text-primary" />
-                        <h3 className="text-lg font-bold text-foreground">Start Small, Deliver Small</h3>
+                    {projects.map((project) => (
+                      <div key={project.id} className="grid grid-cols-12 gap-4 p-4 border-b border-border last:border-0 text-sm items-center hover:bg-muted/30 transition-colors">
+                        <div className="col-span-3 font-medium flex items-center gap-2">
+                          {project.icon}
+                          {project.name}
+                        </div>
+                        <div className="col-span-3 text-muted-foreground">{project.goal}</div>
+                        <div className="col-span-4 text-muted-foreground">{project.hypothesis}</div>
+                        <div className="col-span-2 font-mono text-xs">{project.timeline}</div>
                       </div>
-                      <p className="text-muted-foreground">
-                        Choose a specific task or part of a process, not an entire feature-rich solution. 
-                        Incremental progress beats ambitious failures.
-                      </p>
-                    </div>
-
-                    <div className="space-y-3 p-6 bg-secondary/30 rounded-lg border border-border">
-                      <div className="flex items-center gap-2">
-                        <Lightbulb className="h-6 w-6 text-primary" />
-                        <h3 className="text-lg font-bold text-foreground">Don't Overcomplicate Solutions</h3>
-                      </div>
-                      <p className="text-muted-foreground">
-                        Begin with the simplest workable approach. Add complexity only when evidence 
-                        or roadblocks demand it.
-                      </p>
-                    </div>
-
-                    <div className="space-y-3 p-6 bg-secondary/30 rounded-lg border border-border">
-                      <div className="flex items-center gap-2">
-                        <CheckCircle2 className="h-6 w-6 text-primary" />
-                        <h3 className="text-lg font-bold text-foreground">Value Over Novelty</h3>
-                      </div>
-                      <p className="text-muted-foreground">
-                        Prioritise improvements to workflows, not clever tech for its own sake. 
-                        Real impact matters more than impressive technology.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="mt-8 p-6 bg-primary/5 border border-primary/20 rounded-lg">
-                    <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
-                      <Bot className="h-5 w-5 text-primary" />
-                      How We Apply These Principles
-                    </h4>
-                    <p className="text-muted-foreground mb-4">
-                      Each of our five AI initiatives demonstrates these principles in action. From the Support Chatbot 
-                      targeting specific response time metrics, to the Sales Simulator focusing on one aspect of onboarding, 
-                      to the SEO Dashboard automating a well-defined manual process—we build with purpose, simplicity, and measurable value.
-                    </p>
-                    <p className="text-sm text-muted-foreground italic">
-                      "Focus on value, simplicity, and measurable outcomes to deliver meaningful impact." 
-                      — UK Marketing Team
-                    </p>
+                    ))}
                   </div>
                 </CardContent>
               </Card>
             </TabsContent>
+
+            <TabsContent value="principles" className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-6">
+                <Card className="border-border bg-card">
+                  <CardHeader>
+                    <div className="flex items-center gap-2 mb-2">
+                      <Target className="h-5 w-5 text-primary" />
+                      <CardTitle>Define Outcome Metric</CardTitle>
+                    </div>
+                    <CardDescription>
+                      Make sure you begin with a clear KPI you want to improve.
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+                <Card className="border-border bg-card">
+                  <CardHeader>
+                    <div className="flex items-center gap-2 mb-2">
+                      <Clock className="h-5 w-5 text-primary" />
+                      <CardTitle>Start Small, Deliver Small</CardTitle>
+                    </div>
+                    <CardDescription>
+                      Choose a specific task or part of a process, not an entire feature rich solution.
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+                <Card className="border-border bg-card">
+                  <CardHeader>
+                    <div className="flex items-center gap-2 mb-2">
+                      <Lightbulb className="h-5 w-5 text-primary" />
+                      <CardTitle>Don't Overcomplicate</CardTitle>
+                    </div>
+                    <CardDescription>
+                      Begin with the simplest workable approach; add complexity only when evidence demands it.
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+                <Card className="border-border bg-card">
+                  <CardHeader>
+                    <div className="flex items-center gap-2 mb-2">
+                      <CheckCircle2 className="h-5 w-5 text-primary" />
+                      <CardTitle>Value Over Novelty</CardTitle>
+                    </div>
+                    <CardDescription>
+                      Prioritise improvements to workflows, not clever tech for its own sake.
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+              </div>
+            </TabsContent>
           </Tabs>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="border-t border-border bg-card/30 mt-12">
-        <div className="container py-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <img src="/ventured-logo.png" alt="VenturEd Solutions" className="h-8 w-auto" />
-              <div className="text-sm text-muted-foreground">
-                © 2025 VenturEd Solutions. All rights reserved.
-              </div>
-            </div>
-            <div className="text-sm text-muted-foreground">
-              Created by Aymane El Magri · UK Marketing Team
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
