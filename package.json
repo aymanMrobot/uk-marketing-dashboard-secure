@@ -1,0 +1,10 @@
+{
+  "name": "uk-marketing-dashboard-secure",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "cd client && pnpm install && pnpm build"
+  },
+  "devDependencies": {
+    "pnpm": "latest"
+  }
+}
